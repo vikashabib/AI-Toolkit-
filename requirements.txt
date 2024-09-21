@@ -28,3 +28,4 @@ seaborn
 plotly
 streamlit-option-menu
 mysqlclient
+mysql-connector-python
