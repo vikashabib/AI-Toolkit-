@@ -27,5 +27,6 @@ matplotlib
 seaborn
 plotly
 streamlit-option-menu
+streamlit_js_eval
 #mysqlclient
 #mysql-connector-python
