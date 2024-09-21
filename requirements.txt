@@ -29,5 +29,6 @@ plotly
 streamlit-option-menu
 streamlit_js_eval
 validators==0.28.1
+youtube-transcript-api
 #mysqlclient
 #mysql-connector-python

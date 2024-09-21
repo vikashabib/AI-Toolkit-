@@ -288,7 +288,7 @@ def url_summarization():
                 st.error("Please provide valid URL")
             else:
                 try:
-                    if 'youtube.com' in generic_url:
+                    if 'youtube.com' or 'youtu.be' in generic_url:
                         loader = YoutubeLoader.from_youtube_url(generic_url)
                     else:
                         loader = UnstructuredURLLoader(urls=[generic_url],ssl_verify=False,
