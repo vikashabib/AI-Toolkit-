@@ -4,6 +4,8 @@ This repository contains an AI-powered toolkit built with Streamlit, providing t
 Username: admin
 password: admin
 
+CHAT WITH SQL is currently not working on Streamlit Cloud but it can work well in local!
+**********************************************************************************************************************************************************************
 RAG (Retrieval-Augmented Generation): Combines document retrieval with natural language generation to provide accurate and contextually relevant responses from uploaded documents.
 Chatbot: An interactive AI chatbot that can handle general conversation and provide responses based on input queries.
 Chat with SQL: A feature that enables SQL-based querying through chat, allowing users to communicate with databases in a conversational way.
