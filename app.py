@@ -114,44 +114,44 @@ def retrieval_augmented_generation():
     if 'count' not in st.session_state:
         st.session_state.count = 0
     if uploaded_file:
-        
-        for file in uploaded_file:
-            with open(os.path.join(dir_name,file.name),'wb') as f:
-                f.write(file.getbuffer())
-                
-        if st.session_state.count == 0 or st.session_state.vectors is None:
-            st.session_state.vectors = vector_store_query()
-            st.session_state.count += 1
-            st.write("Vectors Embedded Successfully")
-            
-        user_prompt = st.text_input("Ask me your query")
-        if st.button("Generate Response"):
-            if user_prompt:
-                try:
-                    document_chain = create_stuff_documents_chain(llm=llm,prompt=rag_template)
-                    retriever = st.session_state.vectors.as_retriever()
-                    retrieval_chain = create_retrieval_chain(retriever,document_chain)
-                    relevants_docs = retriever.get_relevant_documents(user_prompt)[:5]
-                    context = "\n".join([docs.page_content for docs in relevants_docs])
-                    response = retrieval_chain.invoke({'input':user_prompt,'context':context})
-                    st.success(response["answer"])
-                    st.toast("Response generated!",icon="🎉")
+        with st.spinner("Preprocessing File"):
+            for file in uploaded_file:
+                with open(os.path.join(dir_name,file.name),'wb') as f:
+                    f.write(file.getbuffer())
                     
-                    with st.expander("Document Similarity Search"):
-                        for i,doc in enumerate(response['context']):
-                            st.write(doc.page_content)
-                            st.write("-------------------------")
+            if st.session_state.count == 0 or st.session_state.vectors is None:
+                st.session_state.vectors = vector_store_query()
+                st.session_state.count += 1
+                st.write("Vectors Embedded Successfully")
+                
+            user_prompt = st.text_input("Ask me your query")
+            if st.button("Generate Response"):
+                if user_prompt:
+                    try:
+                        document_chain = create_stuff_documents_chain(llm=llm,prompt=rag_template)
+                        retriever = st.session_state.vectors.as_retriever()
+                        retrieval_chain = create_retrieval_chain(retriever,document_chain)
+                        relevants_docs = retriever.get_relevant_documents(user_prompt)[:5]
+                        context = "\n".join([docs.page_content for docs in relevants_docs])
+                        response = retrieval_chain.invoke({'input':user_prompt,'context':context})
+                        st.success(response["answer"])
+                        st.toast("Response generated!",icon="🎉")
                         
-                except Exception as e:
-                    st.error(f"Exception is:{e}")
-        if st.button("Reload page"):
-            streamlit_js_eval(js_expressions="parent.window.location.reload()")      
-        if st.button("Reset Files"):
-            st.session_state.vectors = None
-            st.session_state.count = 0
-            delete_files_directory(dir_name)
-            st.success("Deleted all files from the cache")
-            
+                        with st.expander("Document Similarity Search"):
+                            for i,doc in enumerate(response['context']):
+                                st.write(doc.page_content)
+                                st.write("-------------------------")
+                            
+                    except Exception as e:
+                        st.error(f"Exception is:{e}")
+            if st.button("Reload page"):
+                streamlit_js_eval(js_expressions="parent.window.location.reload()")      
+            if st.button("Reset Files"):
+                st.session_state.vectors = None
+                st.session_state.count = 0
+                delete_files_directory(dir_name)
+                st.success("Deleted all files from the cache")
+                
  #--------------------------------------------------Chat With SQL-------------------------------------------------------------------------------------         
 
 # def chat_with_sql():
