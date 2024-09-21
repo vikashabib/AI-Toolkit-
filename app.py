@@ -25,10 +25,10 @@ from langchain.callbacks import StreamlitCallbackHandler
 from langchain_core.output_parsers import StrOutputParser
 load_dotenv()
 
-os.environ['GROQ_API_KEY'] = os.getenv("GROQ_API_KEY")
-os.environ['LANGCHAIN_API_KEY'] = os.getenv("LANGCHAIN_API_KEY")
-os.environ['LANGCHAIN_TRACING_V2']='true'
-os.environ["LANGCHAIN_PROJECT"] = os.getenv("LANGCHAIN_PROJECT")
+os.environ['GROQ_API_KEY'] = st.secrets["general"]["GROQ_API_KEY"]
+os.environ['HF_TOKEN'] = st.secrets["general"]["HF_TOKEN"]
+os.environ['LANGCHAIN_API_KEY'] = st.secrets["general"]["LANGCHAIN_API_KEY"]
+os.environ['LANGCHAIN_TRACING_V2'] = 'true'
 
 
 st.set_page_config("Langchain AI App",page_icon="🐦")
