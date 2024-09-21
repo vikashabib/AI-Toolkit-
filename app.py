@@ -153,62 +153,64 @@ def retrieval_augmented_generation():
             st.success("Deleted all files from the cache")
             
  #--------------------------------------------------Chat With SQL-------------------------------------------------------------------------------------         
-def chat_with_sql():
-    LOCALDB = "USE_LOCALDB"
-    MYSQL ="USE_MYSQL"
-    st.title("🐦Langchain: Chat With SQL")
-    col1,col2 = st.columns([1,1])
-    with col1:
-        my_sqlhost = st.text_input("Provide your  localhost")
-        my_sqlpass = st.text_input("Provide your SQL Password")
-    with col2:
-        my_sqlusername = st.text_input("Provide your SQL Username")
-        my_sqldb =st.text_input("Provide your Database Name")
+
+# def chat_with_sql():
+#     LOCALDB = "USE_LOCALDB"
+#     MYSQL ="USE_MYSQL"
+#     st.title("🐦Langchain: Chat With SQL")
+#     col1,col2 = st.columns([1,1])
+#     with col1:
+#         my_sqlhost = st.text_input("Provide your  localhost")
+#         my_sqlpass = st.text_input("Provide your SQL Password")
+#     with col2:
+#         my_sqlusername = st.text_input("Provide your SQL Username")
+#         my_sqldb =st.text_input("Provide your Database Name")
         
-    if not (my_sqlhost and my_sqlusername and my_sqlpass and my_sqldb):
-        st.error("Please fill all the details")
-        st.stop()
+#     if not (my_sqlhost and my_sqlusername and my_sqlpass and my_sqldb):
+#         st.error("Please fill all the details")
+#         st.stop()
         
-    try:
-        from langchain.agents import create_sql_agent
-        from langchain.sql_database import SQLDatabase
-        from langchain.agents.agent_types import AgentType
-        from langchain.agents.agent_toolkits import SQLDatabaseToolkit
-        from sqlalchemy import create_engine
-        from sqlalchemy.exc import SQLAlchemyError
+#     try:
+#         from langchain.agents import create_sql_agent
+#         from langchain.sql_database import SQLDatabase
+#         from langchain.agents.agent_types import AgentType
+#         from langchain.agents.agent_toolkits import SQLDatabaseToolkit
+#         from sqlalchemy import create_engine
+#         from sqlalchemy.exc import SQLAlchemyError
         
-        engine = create_engine(f"mysql+mysqlconnector://{my_sqlusername}:{my_sqlpass}@{my_sqlhost}/{my_sqldb}")
-        db = SQLDatabase(engine)
-        llm = ChatGroq(model="Gemma2-9b-It")
-        toolkit = SQLDatabaseToolkit(db=db,llm=llm)
-        agent = create_sql_agent(
-            llm=llm,
-            toolkit=toolkit,
-            agent_type= AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-            agent_executor_kwargs={'handle_parsing_errors':True},
-            verbose =True
-        )
-        st.toast("Database Connected!",icon="🛅")
-        if 'messages' not in st.session_state or st.sidebar.button("Clear Message History"):
-            st.session_state.messages = [{"role":"assistant","content":"Hey👋 I am Your SQL friend. How can I help you?"}]
+#         engine = create_engine(f"mysql+mysqlconnector://{my_sqlusername}:{my_sqlpass}@{my_sqlhost}/{my_sqldb}")
+#         db = SQLDatabase(engine)
+#         llm = ChatGroq(model="Gemma2-9b-It")
+#         toolkit = SQLDatabaseToolkit(db=db,llm=llm)
+#         agent = create_sql_agent(
+#             llm=llm,
+#             toolkit=toolkit,
+#             agent_type= AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+#             agent_executor_kwargs={'handle_parsing_errors':True},
+#             verbose =True
+#         )
+#         st.toast("Database Connected!",icon="🛅")
+#         if 'messages' not in st.session_state or st.sidebar.button("Clear Message History"):
+#             st.session_state.messages = [{"role":"assistant","content":"Hey👋 I am Your SQL friend. How can I help you?"}]
         
-        for msg in st.session_state.messages:
-            st.chat_message(msg["role"]).write(msg["content"])
+#         for msg in st.session_state.messages:
+#             st.chat_message(msg["role"]).write(msg["content"])
             
-        user_prompt = st.chat_input(placeholder="Ask me your query")
+#         user_prompt = st.chat_input(placeholder="Ask me your query")
         
-        if user_prompt:
-            st.session_state.messages.append({"role":"user","content":user_prompt})
-            st.chat_message("user").write(user_prompt)
+#         if user_prompt:
+#             st.session_state.messages.append({"role":"user","content":user_prompt})
+#             st.chat_message("user").write(user_prompt)
             
-            with st.chat_message("assistant"):
-                stc = StreamlitCallbackHandler(st.container())
-                response = agent.run(user_prompt,callbacks=[stc])
-                st.session_state.messages.append({"role":"assistant","content":response})
-                st.success(response)
+#             with st.chat_message("assistant"):
+#                 stc = StreamlitCallbackHandler(st.container())
+#                 response = agent.run(user_prompt,callbacks=[stc])
+#                 st.session_state.messages.append({"role":"assistant","content":response})
+#                 st.success(response)
         
-    except Exception as e:
-        st.error(f"Exception error is:{e}")
+#     except Exception as e:
+#         st.error(f"Exception error is:{e}")
+
  #--------------------------------------------------ChatBot-------------------------------------------------------------------------------------         
 def chatbot():
     st.title("🐦Langchain: ChatBot")
@@ -313,7 +315,7 @@ if username=="admin" and password=="admin":
     with st.sidebar:
         selected = option_menu(
             menu_title="GEN AI",
-            options=["RAG QUERY","Chat With SQL","ChatBot","YTube URL Summarize"],
+            options=["RAG QUERY","ChatBot","YTube URL Summarize"],#"Chat With SQL"
             default_index=0,
             styles={
                 "container": {
@@ -333,9 +335,9 @@ if username=="admin" and password=="admin":
     
     if selected=="RAG QUERY":
         retrieval_augmented_generation()
-    elif selected == "Chat With SQL":
-        st.session_state.messages=None
-        chat_with_sql()
+    # elif selected == "Chat With SQL":
+    #     st.session_state.messages=None
+    #     chat_with_sql()
     elif selected=="ChatBot":
         chatbot()
     elif selected=="YTube URL Summarize":
