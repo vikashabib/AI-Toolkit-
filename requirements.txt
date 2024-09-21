@@ -22,10 +22,10 @@ fastapi
 langserve
 sse_starlette
 duckduckgo-search
-mysql
+#mysql
 matplotlib
 seaborn
 plotly
 streamlit-option-menu
-mysqlclient
-mysql-connector-python
+#mysqlclient
+#mysql-connector-python
