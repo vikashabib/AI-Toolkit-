@@ -309,7 +309,7 @@ def url_summarization():
 with st.sidebar:
     username = st.text_input(label="Username")
     password = st.text_input(label='Password',type="password")
-if username=="Ammar" and password=="123":
+if username=="admin" and password=="admin":
     with st.sidebar:
         selected = option_menu(
             menu_title="GEN AI",
@@ -344,9 +344,9 @@ if username=="Ammar" and password=="123":
         st.write("Select Option")
 else:
     if username!="" and password!="":
-        if username !="Ammar" and password=="123":
+        if username !="admin" and password=="admin":
             st.toast("Invalid Username",icon="🚫")
-        elif username =="Ammar" and password!="123":
+        elif username =="admin" and password!="admin":
             st.toast("Invalid Password",icon="🚫")
         else:
             st.toast("Invalid Username and Password",icon="🚫")
