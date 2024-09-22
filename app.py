@@ -272,7 +272,7 @@ def url_summarization():
         """, 
         unsafe_allow_html=True
         )
-    generic_url = st.text_input(label="Provide Url for summarization")
+    #generic_url = st.text_input(label="Provide Url for summarization")
     template = """
     Please Summarize this URL accurately. If any error of Language occur.Please tell it does not support this language
     Content:{text}
@@ -280,7 +280,10 @@ def url_summarization():
     prompt= PromptTemplate(
         template=template,input_variables=["text"]
     )
-    if st.button("Summarize Content"):
+    with st.form(key="summarize_form"):
+        generic_url = st.text_input(label="Provide Url for summarization")
+        submit_button = st.form_submit_button(label="Summarize Content")
+    if submit_button:
         with st.spinner("Generating Summary"):
             if not generic_url:
                 st.error("Please Provide URL to summarize")
