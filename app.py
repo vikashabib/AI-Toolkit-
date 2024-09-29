@@ -242,6 +242,7 @@ def chatbot():
     
     
     pass
+#------------------------------------------------URLSUMMARIZE--------------------------------------------------------------------------------------
 def url_summarization():
     from langchain_community.document_loaders import YoutubeLoader,UnstructuredURLLoader
     from langchain_core.prompts import PromptTemplate
