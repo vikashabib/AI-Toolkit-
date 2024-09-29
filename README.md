@@ -5,6 +5,7 @@ Username: admin
 password: admin
 
 CHAT WITH SQL is currently not working on Streamlit Cloud but it can work well in local!
+https://aitoolkit.streamlit.app/
 **********************************************************************************************************************************************************************
 RAG (Retrieval-Augmented Generation): Combines document retrieval with natural language generation to provide accurate and contextually relevant responses from uploaded documents.
 Chatbot: An interactive AI chatbot that can handle general conversation and provide responses based on input queries.
