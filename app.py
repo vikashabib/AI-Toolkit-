@@ -35,7 +35,7 @@ st.set_page_config("Langchain AI App",page_icon="🐦")
 
 
 ##########################################################################################################################################
-llm = ChatGroq(model="Gemma-7b-It")
+
 rag_template = ChatPromptTemplate.from_template(
     """
     Answer all the questions accurately!.Please read the context from
@@ -49,7 +49,7 @@ rag_template = ChatPromptTemplate.from_template(
 )
 #-----------------------------------------------------------RAG-------------------------------------------------------------------------------------
 def retrieval_augmented_generation():
-    
+    llm = ChatGroq(model="Llama-8b-8192")
     def delete_files_directory(directory):
         for file in os.listdir(directory):
             file_path = os.path.join(directory,file)
