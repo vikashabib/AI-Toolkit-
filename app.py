@@ -23,6 +23,7 @@ from langchain.agents import AgentExecutor,AgentType,initialize_agent
 from streamlit_js_eval import streamlit_js_eval
 from langchain.callbacks import StreamlitCallbackHandler
 from langchain_core.output_parsers import StrOutputParser
+from langchain.memory import ConversationBufferMemory
 load_dotenv()
 
 os.environ['GROQ_API_KEY'] = st.secrets["general"]["GROQ_API_KEY"]
@@ -216,10 +217,12 @@ def chatbot():
     st.title("🐦Langchain: ChatBot")
     llm = ChatGroq(model="Gemma2-9b-It")
     output_parser = StrOutputParser()
+   # memory = ConversationBufferMemory(memory_key="chat_history",return_messages=True)
     prompt = ChatPromptTemplate.from_messages(
         [
             ("system","You are a helpul assitant. Read Carefully and provide accurate answers!"),
-            ("user","Question:{user_prompt}")
+            ("user","Question:{user_prompt}"),
+       
         ]
     )
     if 'chats' not in st.session_state:
@@ -239,8 +242,9 @@ def chatbot():
             response = chain.invoke({'user_prompt':user_prompt})
             st.session_state.chats.append({'role':'assistant','content':response})
             st.success(response)
-    
-    
+
+            # Get the response from LLM
+            
     pass
 #------------------------------------------------URLSUMMARIZE--------------------------------------------------------------------------------------
 def url_summarization():
